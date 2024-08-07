@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Copyright (c) 2021 ETH Zurich, Nikita Rudin
-
+import csv
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import defaultdict
@@ -47,6 +47,33 @@ class Logger:
     def log_states(self, dict):
         for key, value in dict.items():
             self.log_state(key, value)
+
+    def save_states(self,path):
+        with open('path', 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            # 写入元组列表到CSV文件
+            writer.writerows(self.state_log)
+
+    def write_states(self,dict_list,path):
+        # 打开一个文件用于写入，'w'表示写入模式
+        with open(path, 'w', newline='', encoding='utf-8') as csvfile:
+            # 创建一个csv writer对象
+            writer = csv.DictWriter(csvfile, fieldnames=dict_list[0].keys())
+
+            # 写入表头
+            writer.writeheader()
+
+            # 写入字典列表中的数据
+            for row in dict_list:
+                writer.writerow(row)
+
+    def read_dicts_from_csv(self,filepath):
+        dict_list = []
+        with open(filepath, 'r', newline='', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                dict_list.append(row)  # 每一行都会被自动转换为字典
+        return dict_list
 
     def log_rewards(self, dict, num_episodes):
         for key, value in dict.items():

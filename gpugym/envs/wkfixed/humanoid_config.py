@@ -163,7 +163,7 @@ class WKCfg(LeggedRobotCfg):
 
         keypoints = ["SACRUM"]
         end_effectors = ['FOOT_L', 'FOOT_R']
-        foot_name = 'FOOT'
+        foot_name = 'TIPTOE'
 
         terminate_after_contacts_on = [
             'SACRUM',
